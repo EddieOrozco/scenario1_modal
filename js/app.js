@@ -1,31 +1,45 @@
-// All Modal Events
-//  Adding function to window onload
 window.onload = function () {
   let emailState = false;
-  // Creating Variable from HTML Elements
   let emailModal = document.getElementsByClassName('email-modal')[0];
   let closeModal = document.getElementsByClassName('email-modal__close-btn')[0];
-  // View on console if HTML element was selected
+  let emailInput = document.getElementsByClassName('email-modal__input')[0];
+  let emailButton = document.getElementsByClassName('email-modal__button')[0];
+
+  function emailIsValid(email) {
+    return /\S+@\S+\.\S+/.test(email);
+  }
+
+  // Adding Event listener to GET Form value
+  emailButton.addEventListener('click', () => {
+    // Creating email conditional for validation
+    if (emailIsValid(emailInput.value)) {
+      console.log(emailInput.value);
+    } else {
+      /* Both of these elements are only used inside of this conditional and will never be used again */
+      document
+        .getElementsByClassName('email-modal__form-group')[0]
+        .classList.add('email-modal__form-group--error');
+      document
+        .getElementsByClassName('email-modal__error-message')[0]
+        .classList.add('email-modal__error-message--active');
+    }
+  });
+
   console.log(closeModal);
   console.log(emailModal);
 
-  // Event Listener Method
   closeModal.addEventListener('click', () => {
     emailModal.classList.remove('email-modal--visible');
   });
 
-  // Created Function for event listener
   let showModal = () => {
     if (emailState === false) {
-      // Adding classList via JS to HTML Element
       emailModal.classList.add('email-modal--visible');
       emailState = true;
     }
   };
 
-  // Adding event listener to the HTML document w/ attached function
   document.body.addEventListener('mouseleave', () => {
-    // Trigged the Conditional Function
     showModal();
   });
 
